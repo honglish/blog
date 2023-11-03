@@ -1,38 +1,21 @@
-import * as React from "react"
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+import { ChakraProvider, Box, createStandaloneToast } from "@chakra-ui/react";
+import { ApolloProvider as ApolloHooksProvider } from "@apollo/react-hooks";
+import { client } from "./api/client";
+import BlogsSection from "./pages/blog/BlogsSection";
+import { Provider } from "mobx-react";
+import { stores } from "./stores";
+
+const { ToastContainer } = createStandaloneToast();
 
 export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
-  </ChakraProvider>
-)
+  <ApolloHooksProvider client={client}>
+    <Provider {...stores}>
+      <ChakraProvider>
+        <Box textAlign="center" fontSize="xl" bgColor="gray.200" h="100vh">
+          <BlogsSection />
+          <ToastContainer />
+        </Box>
+      </ChakraProvider>
+    </Provider>
+  </ApolloHooksProvider>
+);
