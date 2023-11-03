@@ -16,7 +16,13 @@ export const FormSection = () => {
       >
         <FormikForm>
           <FormLabel htmlFor="title">Title</FormLabel>
-          <Field as={Input} id="title" name="title" placeholder="title" />
+          <Field
+            as={Input}
+            id="title"
+            name="title"
+            placeholder="title"
+            required
+          />
           <FormLabel htmlFor="body">Body</FormLabel>
           <Field
             as={Textarea}
@@ -26,6 +32,7 @@ export const FormSection = () => {
             type="textArea"
             placeholder="this is the body"
             h="500px"
+            required
           />
           <Button mt={4} colorScheme="teal" type="submit">
             Add Post
